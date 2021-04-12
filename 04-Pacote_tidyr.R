@@ -58,7 +58,26 @@ df3
 # reshape dos dados
 
 df3 %>%
-  gather(day, score, c(day1score, day2score))
+  gather(day, score, c(day1score, day2score)) %>%
+  spread(day, score)
+
+df3 %>%
+  gather(day, score, c(day1score, day2score)) %>%
+  separate(col = info, into = c("group", "gender"), sep = 2)
+
+
+df3 %>%
+  gather(day, score, c(day1score, day2score)) %>%
+  separate(col = info, into = c("group", "gender"), sep = 2) %>%
+  unite(infoAgain, group , gender)
+
+
+df3 %>%
+  gather(day, score, c(day1score, day2score)) %>%
+  separate(col = info, into = c("group", "gender"), sep = 2) %>%
+  ggplot(aes(x = day, y = score)) + geom_point() +
+  facet_wrap(~group) +
+  geom_smooth(method = "lm", aes(group = 1 ), se = F)
 
 
 
